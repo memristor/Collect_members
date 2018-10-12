@@ -1,2 +1,4 @@
-# Collect_members
-Collect members from slack groups
+## Install
+```
+pip install --user -r requirements.txt
+```
