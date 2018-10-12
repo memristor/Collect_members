@@ -48,6 +48,8 @@ def get_sheet(id, token_path):
 members = get_slack_members(SLACK_TOKEN, TARGET_CHANNEL)
 sheet = get_sheet(SHEET_ID, SHEET_TOKEN_PATH)
 
+sheet.clear()
+print('The sheet is cleared')
 
 cells = sheet.range(1, 1, len(members), len(members[0].keys()))
 i = 0
@@ -57,5 +59,7 @@ for cell in cells:
     column = list(member.keys())[i % len(members[0].keys())]
     cell.value = member[column]
     i += 1
-
 sheet.update_cells(cells)
+print('The sheet is updated')
+
+exit(0)
