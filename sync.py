@@ -52,13 +52,10 @@ sheet.clear()
 print('The sheet is cleared')
 
 cells = sheet.range(1, 1, len(members), len(members[0].keys()))
-i = 0
-print(len(cells))
-for cell in cells:
+for i, cell in enumerate(cells):
     member = members[int(i / len(members[0].keys()))]
     column = list(member.keys())[i % len(members[0].keys())]
     cell.value = member[column]
-    i += 1
 sheet.update_cells(cells)
 print('The sheet is updated')
 
