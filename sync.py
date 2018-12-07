@@ -68,7 +68,7 @@ i = 0
 for _ in range(n_columns):
     cells[i].value = column_keys[i]
     i += 1
-for _ in range(n_columns * n_rows):
+for _ in range(n_columns * n_rows - n_columns):
     member = members[int(i / n_columns - n_columns)]
     column = column_keys[i % n_columns]
     cells[i].value = member[column]
