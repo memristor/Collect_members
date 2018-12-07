@@ -57,15 +57,23 @@ def get_sheet(id, token_path):
 
 members = get_slack_members(SLACK_TOKEN, TARGET_CHANNEL)
 sheet = get_sheet(SHEET_ID, SHEET_TOKEN_PATH)
+n_columns = len(members[0].keys())
+n_rows = len(members) + 1
 
 sheet.clear()
 print('The sheet is cleared')
 
-cells = sheet.range(1, 1, len(members), len(members[0].keys()))
-for i, cell in enumerate(cells):
-    member = members[int(i / len(members[0].keys()))]
-    column = list(member.keys())[i % len(members[0].keys())]
+cells = sheet.range(1, 1, n_rows, n_columns)
+
+i = 0
+for _ in range(n_columns):
+    cells[i].value = members[0].keys()[i]
+    i += 1
+for _ in range(n_columns * n_rows - n_columns):
+    member = members[int(i / n_columns - n_columns)]
+    column = list(member.keys())[i % n_columns]
     cell.value = member[column]
+    
 sheet.update_cells(cells)
 print('The sheet is updated')
 
