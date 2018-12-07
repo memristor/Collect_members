@@ -61,21 +61,20 @@ n_columns = len(members[0].keys())
 n_rows = len(members) + 1
 column_keys = list(members[0].keys())
 
+# Initialise and populate sheet matrix
 sheet.clear()
-print('The sheet is cleared')
-
 cells = sheet.range(1, 1, n_rows, n_columns)
-
 i = 0
 for _ in range(n_columns):
     cells[i].value = column_keys[i]
     i += 1
-for _ in range(n_columns * n_rows - n_columns):
+for _ in range(n_columns * n_rows):
     member = members[int(i / n_columns - n_columns)]
     column = column_keys[i % n_columns]
     cells[i].value = member[column]
+    i += 1
     
+# Push changes
 sheet.update_cells(cells)
 print('The sheet is updated')
-
 exit(0)
