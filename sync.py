@@ -73,7 +73,7 @@ for _ in range(n_columns):
 for _ in range(n_columns * n_rows - n_columns):
     member = members[int(i / n_columns - n_columns)]
     column = column_keys[i % n_columns]
-    cell.value = member[column]
+    cells[i].value = member[column]
     
 sheet.update_cells(cells)
 print('The sheet is updated')
