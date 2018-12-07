@@ -17,23 +17,33 @@ def get_slack_members(token, channel=None):
     members_id = []
     members = []
 
+    # Store id of `members` that bellog to channel `channel`
     if channel is not None:
         with urllib.request.urlopen('https://slack.com/api/channels.list?token=' + token) as url:
             data_channels = json.loads(url.read().decode())
             members_id = next(( c['members'] for c in data_channels['channels'] if c['name'] == channel), [])
 
+    # Load all members
     with urllib.request.urlopen('https://slack.com/api/users.list?token=' + token) as url:
         data_users = json.loads(url.read().decode())
 
+    # Create a list of members
     for member in data_users['members']:
         if len(members_id) > 0 and member['id'] in members_id:
-            members.append({
+            # Extract basic details
+            member_details = {
                 'id': member['id'],
                 'name': member['profile']['real_name'],
                 'email': member['profile']['email'],
                 'image': member['profile']['image_512'],
                 'phone': member['profile']['phone'] if 'phone' in member['profile'] else '',
-            })
+            }
+            
+            # Check if to which channels does a member belongs to
+            for channel in data_channels['channels']:
+                member_details['channel_' + channel['name']] = (member['id'] in channel['members'])
+                    
+            members.append(member_details)
 
     return members
 
